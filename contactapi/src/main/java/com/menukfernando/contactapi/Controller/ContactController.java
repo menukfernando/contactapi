@@ -1,6 +1,7 @@
 package com.menukfernando.contactapi.Controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.menukfernando.contactapi.domain.Contact;
 import com.menukfernando.contactapi.exception.ContactNotFoundException;
 import com.menukfernando.contactapi.service.ContactService;
@@ -30,7 +32,7 @@ public class ContactController {
     public ResponseEntity<List<Contact>> getAllContacts() {
         try {
             List<Contact> contacts = contactService.getAllContacts();
-            return new ResponseEntity<List<Contact>>(contacts, HttpStatus.OK);
+            return new ResponseEntity<>(contacts, HttpStatus.OK);
         } catch (ContactNotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -72,6 +74,16 @@ public class ContactController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (ContactNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/create/list")
+    public ResponseEntity<List<Contact>> addContacts(@RequestBody List<Contact> contacts) {
+        try {
+            List<Contact> createdContacts = contactService.createMultipleContacts(contacts);
+            return new ResponseEntity<>(createdContacts, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

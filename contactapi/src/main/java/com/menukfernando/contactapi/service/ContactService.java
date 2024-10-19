@@ -1,12 +1,16 @@
 package com.menukfernando.contactapi.service;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import com.menukfernando.contactapi.domain.Contact;
-import com.menukfernando.contactapi.repository.ContactRepository;
 import com.menukfernando.contactapi.exception.ContactNotFoundException;
+import com.menukfernando.contactapi.repository.ContactRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ContactService {
@@ -55,5 +59,10 @@ public class ContactService {
     public void deleteContact(Long id) {
         Contact contact = getContactById(id);
         contactRepository.delete(contact);
+    }
+
+    @Transactional
+    public List<Contact> createMultipleContacts(List<Contact> contacts) {
+        return contactRepository.saveAll(contacts);
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.menukfernando.contactapi.domain.Contact;
 import com.menukfernando.contactapi.exception.ContactNotFoundException;
 import com.menukfernando.contactapi.service.ContactService;
@@ -55,7 +54,10 @@ public class ContactController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contact> updateContact(@PathVariable Long id, @RequestBody Contact contact) {
+    public ResponseEntity<Contact> updateContact(
+        @PathVariable Long id, 
+        @RequestBody Contact contact
+    ) {
         try {
             Contact updatedContact = contactService.updateContact(id, contact);
             return new ResponseEntity<>(updatedContact, HttpStatus.OK);

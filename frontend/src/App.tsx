@@ -1,10 +1,11 @@
 import './App.css'
+import ContactCard from './components/ContactCard'
 
 function App() {
 
   return (
     <>
-      <div>HELLO MENUK</div>
+      <ContactCard contact={undefined} />
     </>
   )
 }
